@@ -104,13 +104,7 @@ lexicore/
 - **Frontend:** ReviewSession.tsx displays full coaching paragraph inline with "Get AI Hint" button
 - **Fallback:** Local hint builder uses word keywords + difficulty context if Groq unavailable
 
-### ML Difficulty Predictor
-- **Model:** scikit-learn LogisticRegression(max_iter=200)
-- **Features:** [interval, repetition, easiness_factor]
-- **Label:** 1 if score < 3 (struggled), 0 if score >= 3 (recalled)
-- **Training:** Requires ≥5 reviews with both label classes; retrains after each review
-- **Output:** Difficulty float 0.0-1.0 in `/words/due/` response
-- **Frontend:** Schedule.tsx shows difficulty dots (red > 0.6, yellow 0.4-0.6, green < 0.4)
+
 
 ### Learning Insights
 - **When:** User views `GET /words/history/`
