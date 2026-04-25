@@ -322,15 +322,6 @@ python sdk_demo.py
 
 The generated client package is in `srs_sdk/`.
 
-## 12. Evaluation Criteria Coverage
-
-- Code quality: Modular backend and typed frontend
-- Correct API implementation: FastAPI routes + validation + status handling
-- Error handling: 4xx responses + frontend inline warnings
-- SDK generation: OpenAPI-generated Python SDK included
-- Frontend integration: Axios client wired to backend
-- Automation scripts: `setupdev.bat`, `runapplication.bat`
-- Unit tests: backend tests under `backend/tests/`
 - Documentation: this README includes full setup-to-run flow
 - Trick logic: SM-2 behavior implemented and persisted in reviews
 
