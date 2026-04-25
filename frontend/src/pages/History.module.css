@@ -1,0 +1,91 @@
+.page {
+  max-width: 980px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: 1.9rem;
+}
+
+.insightsBox {
+  border: 1px solid #facc15;
+  background: #fffbeb;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.insightsTitle {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e6edf5;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table th {
+  background: #f8fafc;
+  font-weight: 700;
+}
+
+.emptyCell {
+  text-align: center;
+  color: #64748b;
+}
+
+.scoreRed {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+.scoreYellow {
+  color: #b45309;
+  font-weight: 700;
+}
+
+.scoreGreen {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.chartCard {
+  margin-top: 1rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.9rem;
+}
+
+.chartTitle {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+}
+
+.chartWrap {
+  width: 100%;
+  height: 320px;
+}
+
+.error {
+  color: #b91c1c;
+  font-weight: 600;
+}

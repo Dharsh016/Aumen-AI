@@ -1,0 +1,113 @@
+.page {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.75rem;
+  background: #f7f9fc;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.fieldLabel {
+  font-weight: 600;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  border: 1px solid #b7c4d5;
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  background: #fff;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.button {
+  width: fit-content;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: #1f6feb;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.loadingRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #334155;
+}
+
+.spinner {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid #b8c7dd;
+  border-top-color: #1f6feb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.error {
+  margin: 0;
+  color: #b91c1c;
+  font-weight: 500;
+}
+
+.card {
+  margin-top: 1rem;
+  background: #ffffff;
+  border: 1px solid #d8e0ea;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.cardTitle {
+  margin: 0 0 0.75rem;
+}
+
+.cardSection {
+  margin-top: 0.75rem;
+}
+
+.cardSection h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.cardSection p,
+.cardSection ul {
+  margin: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
