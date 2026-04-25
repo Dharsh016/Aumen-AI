@@ -204,12 +204,12 @@
 }
 
 .auth-card {
-  width: min(460px, 100%);
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(96, 165, 250, 0.28);
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.5);
-  padding: 26px;
+  width: min(560px, 96%);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(96, 165, 250, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 28px 80px rgba(2, 6, 23, 0.55);
+  padding: 32px 36px;
 }
 
 .auth-title {
@@ -224,11 +224,79 @@
 
 .auth-form {
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
 .auth-submit {
   margin-top: 8px;
+}
+
+/* Enhanced input styles for login/register */
+.auth-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: rgba(2,6,23,0.35);
+  color: #e6eef8;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.auth-input::placeholder { color: #93c5fd88; }
+.auth-input:focus {
+  outline: none;
+  border-color: rgba(96,165,250,0.9);
+  box-shadow: 0 6px 18px rgba(59,130,246,0.12);
+}
+
+.auth-form label {
+  display: block;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.auth-actions { display:flex; justify-content:flex-start; }
+.auth-submit { min-width:140px; }
+
+/* Footer link alignment */
+.auth-footer-links { justify-content: flex-start; }
+
+/* Logout button styling in nav */
+.btn-link {
+  background: linear-gradient(90deg,#1f2937,#0b1220);
+  color: #f8fafc;
+  border: 1px solid rgba(148,163,184,0.18);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.btn-link:hover { background: linear-gradient(90deg,#273449,#0d1726); }
+
+/* small user pill */
+.app-user {
+  color: #f8fafc;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+@media (max-width: 700px) {
+  .auth-card { width: calc(100% - 32px); padding: 22px; }
+  .landing-features { grid-template-columns: 1fr; }
+}
+
+/* When on auth pages, hide landing sections to avoid showing features behind auth card */
+.auth-active .landing-hero,
+.auth-active .landing-features,
+.auth-active .landing-stats {
+  display: none !important;
+}
+
+/* Ensure auth pages use full viewport background when active */
+.auth-active .main-landing {
+  min-height: 100vh;
+  background: linear-gradient(140deg, #0b1220 0%, #101a36 100%);
 }
 
 .auth-success {

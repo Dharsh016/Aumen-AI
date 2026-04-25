@@ -87,6 +87,19 @@ export interface AdminAnalytics {
   top_words: AdminTopWord[];
 }
 
+export interface AuthUser {
+  id: number;
+  name: string;
+  email: string;
+  created_at: string;
+  is_admin: boolean;
+}
+
+export interface AuthResponse {
+  message: string;
+  user: AuthUser;
+}
+
 const ADMIN_EMAIL = "admin@example.com";
 const ADMIN_PASSWORD = "lexicore123";
 
@@ -138,6 +151,30 @@ export async function getAdminAnalytics(): Promise<AdminAnalytics> {
       "X-Admin-Email": ADMIN_EMAIL,
       "X-Admin-Password": ADMIN_PASSWORD,
     },
+  });
+  return response.data;
+}
+
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string
+): Promise<AuthResponse> {
+  const response = await api.post<AuthResponse>("/auth/register", {
+    name,
+    email,
+    password,
+  });
+  return response.data;
+}
+
+export async function loginUser(
+  email: string,
+  password: string
+): Promise<AuthResponse> {
+  const response = await api.post<AuthResponse>("/auth/login", {
+    email,
+    password,
   });
   return response.data;
 }

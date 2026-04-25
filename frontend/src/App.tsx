@@ -16,6 +16,9 @@ import History from "./pages/History";
 import ReviewSession from "./pages/ReviewSession";
 import Schedule from "./pages/Schedule";
 import WordList from "./pages/WordList";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import AdminDashboard from "./pages/AdminDashboard";
 
 type AppStats = {
   wordsLearned: number;
@@ -37,11 +40,11 @@ function OpeningPage({ stats }: { stats: AppStats }) {
           AI-Powered Vocabulary Training — Learn Smarter, Remember Longer
         </p>
         <div className="landing-cta-row">
-          <Link to="/add" className="btn-primary btn-large">
-            Start Learning →
+          <Link to="/login" className="btn-primary btn-large">
+            Login
           </Link>
-          <Link to="/review" className="btn-outline btn-large">
-            Review Today
+          <Link to="/register" className="btn-outline btn-large">
+            Register
           </Link>
         </div>
       </section>
@@ -89,71 +92,105 @@ function OpeningPage({ stats }: { stats: AppStats }) {
   );
 }
 
-function Navbar({ stats }: { stats: AppStats }) {
+function Navbar({ stats, user, onLogout }: { stats: AppStats; user: any; onLogout: () => void }) {
   return (
     <nav className="app-nav">
       <Link to="/" className="app-brand">
         <span className="brand-icon">📚</span>
         <span className="brand-text">LexiCore</span>
       </Link>
-
-      <div className="app-nav-links">
-        <NavLink
-          to="/add"
-          className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
-        >
-          Add Word
-        </NavLink>
-        <NavLink
-          to="/review"
-          className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
-        >
-          Review Today
-        </NavLink>
-        <NavLink
-          to="/history"
-          className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
-        >
-          History
-        </NavLink>
-        <NavLink
-          to="/schedule"
-          className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
-        >
-          Schedule
-        </NavLink>
-        <NavLink
-          to="/words"
-          className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
-        >
-          My Words
-        </NavLink>
-      </div>
+      {user ? (
+        <div className="app-nav-links">
+          <NavLink
+            to="/add"
+            className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
+          >
+            Add Word
+          </NavLink>
+          <NavLink
+            to="/review"
+            className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
+          >
+            Review Today
+          </NavLink>
+          <NavLink
+            to="/history"
+            className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
+          >
+            History
+          </NavLink>
+          <NavLink
+            to="/schedule"
+            className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
+          >
+            Schedule
+          </NavLink>
+          <NavLink
+            to="/words"
+            className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
+          >
+            My Words
+          </NavLink>
+          {user?.is_admin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) => `app-nav-link ${isActive ? "active" : ""}`}
+            >
+              Admin
+            </NavLink>
+          )}
+        </div>
+      ) : null}
 
       <div className="app-nav-stats">
         <span>🔥 {stats.streak}</span>
         <span className="xp-divider">|</span>
         <span>XP: {stats.totalXp}</span>
+        <div style={{ marginLeft: 12 }}>
+          {user ? (
+            <>
+              <span className="app-user">{user.name}</span>
+              <button className="btn-link" onClick={onLogout} style={{ marginLeft: 8 }}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" className="app-nav-link">
+                Login
+              </NavLink>
+              <NavLink to="/register" className="app-nav-link">
+                Register
+              </NavLink>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
 }
 
-function AppLayout({ stats }: { stats: AppStats }) {
+function AppLayout({ stats, user, onLogout }: { stats: AppStats; user: any; onLogout: () => void }) {
   const location = useLocation();
   const isLanding = location.pathname === "/";
 
   return (
     <div className="app-shell">
-      {!isLanding && <Navbar stats={stats} />}
+      {!isLanding && <Navbar stats={stats} user={user} onLogout={onLogout} />}
       <main className={isLanding ? "main-landing" : "main-app"}>
         <Routes>
           <Route path="/" element={<OpeningPage stats={stats} />} />
-          <Route path="/add" element={<AddWord />} />
-          <Route path="/review" element={<ReviewSession />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/words" element={<WordList />} />
+          <Route path="/add" element={user ? <AddWord /> : <Navigate to="/login" replace />} />
+          <Route path="/review" element={user ? <ReviewSession /> : <Navigate to="/login" replace />} />
+          <Route path="/history" element={user ? <History /> : <Navigate to="/login" replace />} />
+          <Route path="/schedule" element={user ? <Schedule /> : <Navigate to="/login" replace />} />
+          <Route path="/words" element={user ? <WordList /> : <Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/admin"
+            element={user?.is_admin ? <AdminDashboard /> : <Navigate to="/login" replace />}
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -163,6 +200,14 @@ function AppLayout({ stats }: { stats: AppStats }) {
 
 function App() {
   const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([]);
+  const [user, setUser] = useState<any>(() => {
+    try {
+      const raw = localStorage.getItem("lexicore_user");
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  });
 
   useEffect(() => {
     const loadStats = async () => {
@@ -200,7 +245,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AppLayout stats={appStats} />
+      <AppLayout
+        stats={appStats}
+        user={user}
+        onLogout={() => {
+          localStorage.removeItem("lexicore_user");
+          setUser(null);
+          window.location.href = "/";
+        }}
+      />
     </BrowserRouter>
   );
 }
